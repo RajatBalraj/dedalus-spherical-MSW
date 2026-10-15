@@ -8,6 +8,8 @@ Some example simulation plots are added.
 
 
 The following SW system is simulated. A $\nabla^4$ hyperviscosity is added to each prognostic equation. Easy to add source terms:
+
+
 $$
 \frac{\partial \vec{u}}{\partial t} + \vec{u} \cdot \vec{\nabla} \vec{u} + f \vec{k} \times \vec{u} = -g \vec{\nabla}h \\[1em]
 
