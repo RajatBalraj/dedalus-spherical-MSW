@@ -1,6 +1,7 @@
 """
 This function can be used to add random forcing at any wavenumber range desired.
 Setting correlation = 0 will result in a white noise.
+Copied from suhasdl's pySWE repo - "https://github.com/suhasdl/pySWE/"
 """
 import numpy as np
 import sphTrans
