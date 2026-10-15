@@ -57,7 +57,6 @@ timestep = 450 * second
 stop_sim_time = 24*args.run_days* hour
 
 Q = ug.Q #scale of saturation vapor pressure in meters of water in the column (50mm water about how much is found in the equatorial atm)
-
 chi = ug.chi #non dimensional conversion factor between q and h
 tau = ug.tau #condensation/evaporation timescale
 
@@ -109,7 +108,7 @@ elif args.IC_type == 'random':
         # Create solver
         solver = problem.build_solver(d3.RK222)
         solver.load_state(data_path + 
-            f'dlsuhas_reproduce/{args.data_folder}/{args.data_folder}_s1.h5', index=-1,allow_missing=True)
+            f'IVP/{args.data_folder}/{args.data_folder}_s1.h5', index=-1,allow_missing=True)
 
         h['g'] = solver.state[0]['g']
         q_sat['g'] = solver.state[1]['g']
@@ -169,10 +168,10 @@ if args.spinup == 0:
 
 if args.spinup == 1:
     solver.load_state(data_path + 
-    f'dlsuhas_reproduce/{args.data_folder}/spinup_checkpoint/dry_part/dry_part_s1.h5', index=-1,allow_missing=True)
+    f'IVP/{args.data_folder}/spinup_checkpoint/dry_part/dry_part_s1.h5', index=-1,allow_missing=True)
 
     solver.load_state(data_path + 
-    f'dlsuhas_reproduce/{args.data_folder}/spinup_checkpoint/moist_part/moist_part_s1.h5', index=-1,allow_missing=True)
+    f'IVP/{args.data_folder}/spinup_checkpoint/moist_part/moist_part_s1.h5', index=-1,allow_missing=True)
 
     foldername = args.data_folder
     
@@ -181,7 +180,7 @@ print(foldername)
 ##############################################################################
 
 # Analysis
-snapshots = solver.evaluator.add_file_handler(data_path + f'dlsuhas_reproduce/{foldername}/tau_c_{args.conv_time}_full_run', 
+snapshots = solver.evaluator.add_file_handler(data_path + f'IVP/{foldername}/tau_c_{args.conv_time}_full_run', 
                                               sim_dt=6*hour, max_writes=16*5+1)#10days 3 hourly in one file
 
 snapshots.add_task(d3.dot(u, ex)/(meter/second), name='u')
@@ -208,13 +207,5 @@ except:
     raise
 finally:
     solver.log_stats()
-
-'''u.change_scales(1)
-psi.change_scales(1)
-h.change_scales(1)
-kappa.change_scales(1)
-q.change_scales(1)
-P.change_scales(1)
-E.change_scales(1)'''
 
 print('sim done')
