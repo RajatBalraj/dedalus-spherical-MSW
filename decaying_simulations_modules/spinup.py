@@ -41,7 +41,6 @@ H = ug.H
 timestep = 450 * second
 
 Q = ug.Q #scale of saturation vapor pressure in meters of water in the column (50mm water about how much is found in the equatorial atm)
-
 chi = ug.chi #non dimensional conversion factor between q and h
 tau = ug.tau #condensation/evaporation timescale
 
@@ -61,9 +60,6 @@ class DedalusHeaviside(UnaryGridFunction):#input shout be (q-q_sat or q_sat-q de
         super().__init__(func, arg, **kwargs)
 
 ############################################################################
-
-
-
 coords = ug.coords
 dist = ug.dist
 basis = ug.basis
@@ -88,7 +84,7 @@ if args.IC_type=='gaussian':
     from gaussian_height_qsat_IC import gaussian_height_qsat_IC
     h['g'], q_sat['g'] = gaussian_height_qsat_IC(H/meter, Q/meter, args.dlat, args.dlon, args.lat_center, args.lon_center)
 
-if args.IC_type == 'random':
+elif args.IC_type == 'random':
     try:
         problem = d3.IVP([h, q_sat], namespace=locals())
         problem.add_equation("dt(h) = 0")
@@ -109,7 +105,7 @@ if args.IC_type == 'random':
 else:
     raise ValueError('IC_type only permits "gaussian" or "random" ')
 
-print(abs(h['g'].max())/meter, q_sat['g'].max()/meter)
+#print(abs(h['g'].max())/meter, q_sat['g'].max()/meter)
 q_sat.change_scales(1)
 h.change_scales(1)
 ##########################################################################
@@ -117,19 +113,14 @@ h.change_scales(1)
 u['g']= 0
 psi['g'] = 0
 kappa['g'] = 0
-
 q['g'] = q_sat['g']
 P['g'] = 0
 E['g'] = 0
 #############################################################
 
-
 print('Beginning spinup')
 #spin up
-
 #eight variables - zeta, delta, h, q, P, E, \vec(u)(2) . In the steady state problem, we'll hold h constant and see if u and q can come to an eqm
-# -div(skew(A)) = k dot curl(A)
-
 # -div(skew(A)) = k dot curl(A)
 c = dist.Field(name='c')
 d = dist.Field(name='d')
@@ -149,12 +140,12 @@ solver.stop_sim_time = 24*12 * hour + 2*timestep #the extra two timesteps are so
 
 
 # Analysis
-checkpoints = solver.evaluator.add_file_handler(data_path + f'dlsuhas_reproduce/{args.data_folder}/spinup_checkpoint/dry_part', 
+checkpoints = solver.evaluator.add_file_handler(data_path + f'/{args.data_folder}/spinup_checkpoint/dry_part', 
                                                 sim_dt=24*hour, max_writes=24*5+1)
 checkpoints.add_tasks(solver.state)
 
 #####################################################
-snapshots = solver.evaluator.add_file_handler(data_path + f'dlsuhas_reproduce/{args.data_folder}/spinup/dry_part', 
+snapshots = solver.evaluator.add_file_handler(data_path + f'/{args.data_folder}/spinup/dry_part', 
                                               sim_dt=24*hour, max_writes=24*5+1)
 
 snapshots.add_task(d3.dot(u, ex)/(meter/second), name='u')
