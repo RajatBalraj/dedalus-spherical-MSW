@@ -6,8 +6,6 @@ logger = logging.getLogger(__name__)
 import dedalus_grid_setup
 
 dtype = np.float64
-
-
 #################################################################
 # Simulation units
 
@@ -42,8 +40,6 @@ def gaussian_height_qsat_IC(H,Q, dlat, dlon, lat_center, lon_center):
     ##########################################################################
 
     # Initial conditions: gaussian bump
-
-
     lat_center, lon_center = np.deg2rad(lat_center), np.deg2rad(lon_center) #edit
 
     #disturbance extents
@@ -61,7 +57,6 @@ def gaussian_height_qsat_IC(H,Q, dlat, dlon, lat_center, lon_center):
 
     #actually initial conditions: create gaussian geopotential bump, then BVP for psi 
     h['g'] = - H/30 * bump['g']  #just the perturbation, low pressure
-
 
     #initial condition: saturation field
     q_sat['g'] = Q * np.exp(-(lat_field['g'] - lat_center)**2 /(delta_latQ**2)) 
