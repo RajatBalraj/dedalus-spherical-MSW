@@ -3,6 +3,7 @@ Wrapper class for commonly used spectral transform operations in
 atmospheric models.  Provides an interface to shtns compatible
 with pyspharm (pyspharm.googlecode.com).
 Copied from shtns example file with slight modifications.
+Copied from suhasdl's pySWE repo - "https://github.com/suhasdl/pySWE/"
 """
 import numpy as np
 import shtns
