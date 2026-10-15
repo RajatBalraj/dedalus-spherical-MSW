@@ -140,12 +140,12 @@ solver.stop_sim_time = 24*12 * hour + 2*timestep #the extra two timesteps are so
 
 
 # Analysis
-checkpoints = solver.evaluator.add_file_handler(data_path + f'/{args.data_folder}/spinup_checkpoint/dry_part', 
+checkpoints = solver.evaluator.add_file_handler(data_path + f'IVP/{args.data_folder}/spinup_checkpoint/dry_part', 
                                                 sim_dt=24*hour, max_writes=24*5+1)
 checkpoints.add_tasks(solver.state)
 
 #####################################################
-snapshots = solver.evaluator.add_file_handler(data_path + f'/{args.data_folder}/spinup/dry_part', 
+snapshots = solver.evaluator.add_file_handler(data_path + f'IVP/{args.data_folder}/spinup/dry_part', 
                                               sim_dt=24*hour, max_writes=24*5+1)
 
 snapshots.add_task(d3.dot(u, ex)/(meter/second), name='u')
@@ -188,12 +188,12 @@ solver = problem.build_solver(d3.RK443)
 solver.stop_sim_time = 24*5*hour + 2*timestep
 
 # Analysis
-checkpoints = solver.evaluator.add_file_handler(data_path + f'dlsuhas_reproduce/{args.data_folder}/spinup_checkpoint/moist_part',
+checkpoints = solver.evaluator.add_file_handler(data_path + f'IVP/{args.data_folder}/spinup_checkpoint/moist_part',
                                                  sim_dt=24*hour, max_writes=24*5+1)
 checkpoints.add_tasks(solver.state)
 
 ##################################################
-snapshots = solver.evaluator.add_file_handler(data_path + f'dlsuhas_reproduce/{args.data_folder}/spinup/moist_part', 
+snapshots = solver.evaluator.add_file_handler(data_path + f'IVP/{args.data_folder}/spinup/moist_part', 
                                               sim_dt=24*hour, max_writes=24*5+1)
 snapshots.add_task(q/(meter), name='q')
 snapshots.add_task(P/(meter/second), name='P')
