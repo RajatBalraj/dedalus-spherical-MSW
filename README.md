@@ -11,6 +11,8 @@ The following SW system is simulated. A $\nabla^4$ hyperviscosity is added to ea
 
 
 $$
+
+
 \frac{\partial \vec{u}}{\partial t} + \vec{u} \cdot \vec{\nabla} \vec{u} + f \vec{k} \times \vec{u} = -g \vec{\nabla}h \\[1em]
 
 \frac{\partial h}{\partial t} + \vec{\nabla} \cdot \left(\vec{u} h\right) = -\chi (P-E) \\[1em]
@@ -23,4 +25,6 @@ P = \frac{(q - q_s)}{\tau_c} \Theta \left[q-q_s\right] \\[1em]
 E = \frac{(q_s - q)}{\tau_e} \Theta \left[q_s - q\right] \\[1em]
 
 f = 2 \Omega \sin \phi
+
+
 $$
