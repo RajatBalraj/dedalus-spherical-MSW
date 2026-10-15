@@ -33,10 +33,8 @@ ug = dedalus_grid_setup.units_and_grid(300, 0.05, 5000, 0.1) #units and grids #c
 meter = ug.meter
 dist = ug.dist
 Q = ug.Q #scale of saturation vapor pressure in meters of water in the column (50mm water about how much is found in the equatorial atm)
-
 h = ug.h
 q_sat = ug.q_sat
-
 lat_field = ug.lat_field
 
 ##########################################################################
@@ -47,11 +45,10 @@ lat_field = ug.lat_field
 if dist.comm.rank==0:
     perturb = sphericalForcing.sphForcing(512, 256, 8, 6371e3, 0, 12, 2, 0)
     '''
-    nlons, nlats, ntrunc, rsphere, lmin, lmax, magnitude, correlatiom
-
+    nlons, nlats, ntrunc, rsphere, lmin, lmax, magnitude, correlation
 
     #ntrunc       # typically 2/3rd of max resolved wavenumber
-        magnitude given as 2 meters, #as a rule of thing, the final forcing amplitude seems to end up 3-5 times the number here. so check before applying to simulation
+        magnitude given as 2 meters, #as a rule of thumb, the final forcing amplitude seems to end up 3-5 times the number here. so check before applying to simulation
         correlation is zero - white noise
         
     '''
@@ -100,7 +97,7 @@ if dist.comm.rank==0:
     solver.stop_sim_time = 1
     # Checkpoint handler
     checkpoints = solver.evaluator.add_file_handler(
-        data_path + f'dlsuhas_reproduce/{args.data_folder}/',
+        data_path + f'IVP/{args.data_folder}/',
         sim_dt=1,
         max_writes=1
     )
