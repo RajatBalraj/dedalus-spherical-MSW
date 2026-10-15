@@ -2,13 +2,7 @@ import numpy as np
 import dedalus.public as d3
 import logging
 logger = logging.getLogger(__name__)
-
-import sys
-# 1. Provide the path to the folder containing your .py file
-sys.path.append('/home/rajat/Desktop/Project/codes/random_forcing')
-
 import sphericalForcing
-
 import dedalus_grid_setup
 import xarray as xr
 dtype = np.float64
